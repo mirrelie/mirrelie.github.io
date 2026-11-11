@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Тренажёр по математике — Валерия Владиславовна</title>
+<meta name="description" content="Сложение и вычитание в пределах 100 по страницам учебника Моро, 2 класс. Тренажёр репетитора начальных классов Валерии Владиславовны.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+/* Тренажёр отдельной страницей. Собирается скриптом mockups/src/build_trainer.py из красного лендинга. */
+:root{color-scheme:light;--text:'Inter',system-ui,-apple-system,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:#C9B0EA;color:#16141A;font-family:var(--text);-webkit-font-smoothing:antialiased}
+p,ol,ul{margin:0}
+.page{max-width:480px;margin:0 auto;padding:16px 16px 40px}
+.page-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;font-size:13px}
+.page-top a{color:#3B2470;text-decoration:none;font-weight:600}
+.page-top a:hover{text-decoration:underline}
+.page-foot{margin-top:18px;text-align:center;font-size:12.5px;line-height:1.5;color:#3B2470}
+.page-foot a{display:inline-block;margin-top:8px;border-radius:12px;padding:11px 18px;background:#fff;color:#5826C0;font-weight:700;text-decoration:none}
+.page-foot a:hover{background:#F0E9FC}
+/* ===== Тренажёр: свой стиль «детское приложение» — белые карточки, фигурки с глазками, пастель ===== */
+.trn{--t-bg:#C9B0EA;--t-field:#F3F2F7;--t-ink:#16141A;--t-muted:#77727F;--t-line:#E8E5EE;--t-purple:#6B34D6;--t-purple-d:#5826C0;--t-purple-l:#F0E9FC;--t-coral:#EF6B4F;--t-yellow:#F5B52E;--t-teal:#33BFAA;--t-ok:#12806F;--t-bad:#C2432A;
+  font-family:var(--text);color:var(--t-ink);text-align:left}
+.trn [hidden],.trn[hidden]{display:none!important}
+.trn button{font-family:inherit}
+.trn :focus-visible{outline:3px solid var(--t-purple);outline-offset:2px}
+.trn-card{position:relative;margin-top:10px;background:#fff;border-radius:22px;box-shadow:0 14px 30px rgba(40,10,10,.35);overflow:hidden}
+.trn-hero{position:relative;height:160px;padding:20px 18px 0;background:linear-gradient(180deg,#fff 0%,#F1E9FC 100%)}
+.trn-hero h3{margin:0;font-size:28px;font-weight:800;letter-spacing:-.02em;line-height:1.05}
+.trn-hero p{max-width:112px;margin-top:6px;font-size:12.5px;line-height:1.35;color:var(--t-muted)}
+.trn-chars{position:absolute;right:-4px;bottom:-14px;width:180px;height:106px}
+.trn-chars span{position:absolute}
+.trn-chars svg{display:block;width:100%;height:100%}
+.trn-body{padding:4px 18px 20px}
+.trn-lbl{display:block;margin:18px 0 8px;font-size:13px;font-weight:700}
+.trn-field{display:block;width:100%;height:44px;border:0;border-radius:10px;background:var(--t-field);padding:0 14px;font:inherit;font-size:14px;color:var(--t-ink)}
+.trn-field:focus{outline:2px solid var(--t-purple);outline-offset:0}
+select.trn-field{margin-top:10px;-webkit-appearance:none;appearance:none;cursor:pointer;padding-right:38px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' fill='none' stroke='%2316141A' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+.trn-names{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.trn-names:empty{display:none}
+.trn-name{display:inline-flex;align-items:center;border-radius:999px;background:var(--t-purple-l);font-size:13px}
+.trn-name button{border:0;background:none;cursor:pointer;padding:5px 3px 5px 12px;font-size:13px;color:var(--t-purple-d)}
+.trn-name button + button{padding:5px 10px 5px 4px;color:var(--t-muted)}
+.trn-seg{display:flex;gap:4px;padding:4px;border-radius:10px;background:var(--t-field)}
+.trn-seg button{flex:1;border:0;border-radius:8px;background:none;padding:9px 4px;font-size:12.5px;font-weight:600;color:var(--t-muted);cursor:pointer}
+.trn-seg button[aria-pressed="true"]{background:#fff;color:var(--t-ink);box-shadow:0 2px 6px rgba(30,20,50,.08)}
+.trn-set{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:9px}
+.trn-set li,.trn-brow{display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.3}
+.trn-set li > span:nth-child(2),.trn-bt{flex:1;min-width:0}
+.trn-set small,.trn-bt small{display:block;font-size:11.5px;color:var(--t-muted)}
+.trn-n{font-weight:700;font-variant-numeric:tabular-nums}
+.trn-dot{flex:none;width:10px;height:10px;border-radius:50%}
+.trn-grp{margin:16px 0 4px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--t-muted)}
+.trn-brow{padding:8px 0;border-bottom:1px solid var(--t-line)}
+.trn-step{flex:none;display:flex;align-items:center;gap:5px}
+.trn-step button{width:28px;height:28px;border:0;border-radius:50%;background:var(--t-field);padding:0;font-size:17px;line-height:1;color:var(--t-ink);cursor:pointer}
+.trn-step button:disabled{opacity:.35;cursor:default}
+.trn-step b{min-width:16px;text-align:center;font-variant-numeric:tabular-nums}
+.trn-total{margin-top:12px;font-size:12.5px;color:var(--t-muted)}
+.trn-modes{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.trn-mode{border:1.5px solid transparent;border-radius:12px;background:var(--t-field);padding:10px 11px;text-align:left;color:var(--t-ink);cursor:pointer}
+.trn-mode b{display:block;font-size:13.5px}
+.trn-mode span{display:block;margin-top:2px;font-size:11px;line-height:1.3;color:var(--t-muted)}
+.trn-mode[aria-checked="true"]{border-color:var(--t-purple);background:var(--t-purple-l)}
+.trn-btn{display:flex;align-items:center;justify-content:center;width:100%;height:50px;margin-top:20px;border:0;border-radius:12px;background:var(--t-purple);font-size:15px;font-weight:600;color:#fff;text-decoration:none;cursor:pointer}
+.trn-btn:hover{background:var(--t-purple-d)}
+.trn-btn:disabled{opacity:.4;cursor:default}
+.trn-btn.ghost{background:var(--t-field);color:var(--t-ink)}
+.trn-btn.ghost:hover{background:var(--t-line)}
+/* решение примеров — в той же карточке; кнопка «на весь экран» увеличивает её для демонстрации экрана */
+.trn-stage{padding:14px 16px 20px}
+.trn-screen{position:relative}
+.trn-top{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:36px}
+.trn-link{border:0;background:none;padding:6px 0;font-size:14px;color:var(--t-muted);cursor:pointer}
+.trn-link:hover{color:var(--t-ink)}
+.trn-who{flex:1;min-width:0;text-align:center;font-weight:700;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.trn-top-r{display:flex;align-items:center;gap:6px}
+.trn-cnt{border-radius:999px;padding:5px 11px;font-size:14px;font-weight:700;font-variant-numeric:tabular-nums}
+.trn-cnt.ok{background:#DDF4EF;color:var(--t-ok)}
+.trn-cnt.bad{background:#FDE4DD;color:var(--t-bad)}
+.trn-icon{display:grid;place-items:center;width:34px;height:34px;border:0;border-radius:10px;background:var(--t-field);color:var(--t-ink);cursor:pointer}
+.trn-meta{min-height:20px;margin-top:8px;text-align:center;font-size:14px;color:var(--t-muted)}
+.trn-buddy{width:118px;margin:4px auto 0}
+.trn-buddy svg{display:block;width:100%;height:auto}
+.trn-task{display:flex;justify-content:center;align-items:center;gap:.28em;margin-top:6px;font-weight:800;font-size:40px;line-height:1;letter-spacing:-.01em;font-variant-numeric:tabular-nums;white-space:nowrap}
+.trn-task input{width:2.5em;height:1.4em;margin:0;padding:0;border:0;border-radius:.26em;background:var(--t-field);font:inherit;letter-spacing:inherit;text-align:center;color:var(--t-ink);outline:none;box-shadow:inset 0 0 0 3px transparent}
+.trn-task input:focus{box-shadow:inset 0 0 0 3px var(--t-purple)}
+.trn-task input.trn-shown{background:#FDE4DD;color:var(--t-bad);box-shadow:none}
+.trn-msg{display:flex;align-items:center;justify-content:center;min-height:42px;margin-top:8px;text-align:center;font-size:17px;font-weight:700;color:var(--t-muted)}
+.trn-msg.ok{color:var(--t-ok)}
+.trn-msg.bad{color:var(--t-bad)}
+.trn-msg.ans{color:var(--t-ink)}
+.trn-msg.ans b{margin-left:.3em;color:var(--t-bad)}
+#trnForm .trn-btn{max-width:340px;margin:4px auto 0}
+.trn-dots{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:20px}
+.trn-dots i{width:14px;height:14px;border-radius:50%;background:var(--t-line)}
+.trn-dots i.cur{background:#fff;box-shadow:inset 0 0 0 3px var(--t-purple)}
+.trn-dots i.ok{background:var(--t-teal)}
+.trn-dots i.retry{background:var(--t-yellow)}
+.trn-dots i.bad{background:var(--t-coral)}
+.trn-dots i.done{background:#BCA9EA}
+.trn-buddy.small{width:120px}
+.trn-h{margin:4px 0 0;text-align:center;font-size:34px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.trn-sub{margin-top:6px;text-align:center;font-size:13.5px;color:var(--t-muted)}
+.trn-score{margin-top:18px;border-radius:18px;padding:16px 22px;background:linear-gradient(135deg,#A783EE,#7A47DE);text-align:center;color:#fff}
+.trn-score span,.trn-score small{display:block;font-size:13px;opacity:.9}
+.trn-score b{display:block;font-size:34px;font-weight:800;line-height:1.15}
+.trn-weak{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.trn-weak li{display:flex;justify-content:space-between;align-items:center;gap:12px;border-radius:12px;padding:12px 14px;font-size:14px;font-weight:600;line-height:1.3;color:#fff}
+.trn-weak li small{flex:none;font-weight:500;opacity:.92}
+.trn-weak .y{background:linear-gradient(90deg,#F27E5F,#E5543A)}
+.trn-weak .n{background:linear-gradient(90deg,#45C9B6,#1E9F8F)}
+.trn-weak .k{background:linear-gradient(90deg,#F6AE3A,#EE861E)}
+.trn-weak .x{background:linear-gradient(90deg,#8FA4E2,#6A84D3)}
+.trn-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;column-gap:22px}
+.trn-list li{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--t-line);font-size:15px;font-variant-numeric:tabular-nums}
+.trn-list li small{margin-left:auto;font-size:12.5px;color:var(--t-muted);text-align:right}
+.trn-list li.bad small{color:var(--t-bad)}
+.trn-report{display:block;width:100%;margin-top:10px;border:0;border-radius:12px;background:var(--t-field);padding:12px 14px;font:inherit;font-size:13px;line-height:1.45;color:var(--t-ink);resize:vertical}
+.trn-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.trn-row .trn-btn{margin-top:10px}
+.trn-toast{position:fixed;left:50%;bottom:calc(28px + env(safe-area-inset-bottom,0px));z-index:101;transform:translateX(-50%);border-radius:999px;padding:10px 18px;background:#16141A;font-size:14px;color:#fff}
+/* на весь экран — крупно, для демонстрации экрана на уроке */
+.trn-card:fullscreen{overflow-y:auto;border-radius:0;background:var(--t-bg);padding:calc(24px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.trn-card:fullscreen .trn-stage{padding:0}
+.trn-card:fullscreen .trn-screen{max-width:760px;margin:0 auto;padding:22px 28px 30px;border-radius:28px;background:#fff;box-shadow:0 20px 60px rgba(60,30,110,.18)}
+.trn-card:fullscreen .trn-buddy{width:clamp(130px,20vw,190px)}
+.trn-card:fullscreen .trn-buddy.small{width:130px}
+.trn-card:fullscreen .trn-task{font-size:clamp(40px,8.5vw,84px)}
+.trn-card:fullscreen .trn-msg{font-size:22px;min-height:50px}
+.trn-card:fullscreen .trn-meta{font-size:15px}
+.trn-card:fullscreen .trn-list{grid-template-columns:1fr 1fr}
+
+/* ── подгонка под телефон: карточка компактнее, чтобы не растягиваться на весь экран ── */
+#practice{margin-left:-12px;margin-right:-12px}
+.trn-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.trn-hero{height:104px;padding:16px 16px 0}
+.trn-hero h3{font-size:24px}
+.trn-hero p{max-width:124px;margin-top:4px;font-size:12px;line-height:1.3}
+.trn-chars{transform:scale(.8);transform-origin:right bottom;right:0;bottom:-8px}
+.trn-body{padding:2px 16px 16px}
+.trn-lbl{margin:14px 0 6px;font-size:12.5px}
+.trn-field{height:40px;font-size:14px}
+#trnName{margin-top:10px}
+select.trn-field{margin-top:8px}
+.trn-seg button{padding:8px 4px}
+.trn-set{margin-top:10px;gap:6px}
+.trn-set li,.trn-brow{gap:8px;font-size:12.5px;line-height:1.25}
+.trn-set small,.trn-bt small{font-size:11px}
+.trn-total{margin-top:8px;font-size:12px}
+.trn-modes{gap:6px}
+.trn-mode{padding:9px 10px;border-radius:10px;text-align:center}
+.trn-mode b{font-size:13px}
+.trn-hint{margin-top:8px;font-size:12px;text-align:center;color:var(--t-muted)}
+.trn-btn{height:46px;margin-top:14px;font-size:14.5px}
+.trn-stage{padding:10px 14px 16px}
+.trn-top{min-height:32px}
+.trn-meta{margin-top:4px;font-size:13px}
+.trn-buddy{width:84px;margin-top:2px}
+.trn-buddy.small{width:92px}
+.trn-task{margin-top:2px;font-size:36px}
+.trn-msg{min-height:34px;margin-top:4px;font-size:16px}
+.trn-dots{margin-top:14px;gap:6px}
+.trn-dots i{width:12px;height:12px}
+.trn-h{font-size:28px}
+.trn-score{margin-top:12px;padding:12px 18px}
+.trn-score b{font-size:30px}
+.trn-weak li{padding:10px 12px;font-size:13px}
+.trn-list li{padding:6px 0;font-size:14px}
+.trn-all{margin-top:14px}
+.trn-all summary{display:flex;justify-content:space-between;align-items:center;padding:6px 0;list-style:none;cursor:pointer;font-size:12.5px;font-weight:700}
+.trn-all summary::-webkit-details-marker{display:none}
+.trn-all summary::after{content:"+";font-size:22px;font-weight:400;line-height:.6;color:var(--t-purple)}
+.trn-all[open] summary::after{content:"\2212"}
+.trn-all .trn-list{margin-top:4px}
+
+
+#practice{margin-left:0;margin-right:0;margin-top:0}
+</style>
+</head>
+<body>
+<main class="page">
+  <div class="page-top"><a href="/">← mirrelie.com</a><span>Валерия Владиславовна</span></div>
+  <div class="trn trn-card" id="practice">
+          <div id="trnSetupBox">
+            <div class="trn-hero">
+              <h3>Тренажёр</h3>
+              <p>Сложение и&nbsp;вычитание до&nbsp;100</p>
+              <div class="trn-chars" id="trnChars" aria-hidden="true"></div>
+            </div>
+            <form class="trn-body" id="trnSetup" autocomplete="off">
+              <div id="trnWhoBox">
+                <label class="trn-sr" for="trnName">Имя ученика</label>
+                <input class="trn-field" id="trnName" maxlength="40" placeholder="Имя ученика (необязательно)">
+                <div class="trn-names" id="trnNames"></div>
+              </div>
+              <span class="trn-lbl">Задание</span>
+              <div class="trn-seg" id="trnSrc">
+                <button type="button" data-src="moro" aria-pressed="true">Учебник Моро</button>
+                <button type="button" data-src="custom" aria-pressed="false">Свой набор</button>
+              </div>
+              <div id="trnMoro">
+                <select class="trn-field" id="trnPage" aria-label="Страница учебника Моро"></select>
+                <ul class="trn-set" id="trnSet"></ul>
+              </div>
+              <div id="trnCustom" hidden></div>
+              <p class="trn-total" id="trnTotal"></p>
+              <span class="trn-lbl">Режим</span>
+              <div class="trn-modes" id="trnModes" role="radiogroup" aria-label="Режим"></div>
+              <p class="trn-hint" id="trnModeHint"></p>
+              <button class="trn-btn" type="submit" id="trnStart">Начать</button>
+            </form>
+          </div>
+          <div class="trn-stage" id="trnStage" hidden>
+            <div class="trn-screen">
+              <div id="trnPlay">
+                <div class="trn-top">
+                  <button type="button" class="trn-link" id="trnStop">← Завершить</button>
+                  <div class="trn-top-r">
+                    <span class="trn-cnt ok" id="trnOk"></span>
+                    <span class="trn-cnt bad" id="trnBad"></span>
+                    <button type="button" class="trn-icon" id="trnFull" aria-label="На весь экран" title="На весь экран"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+                  </div>
+                </div>
+                <p class="trn-meta" id="trnMeta"></p>
+                <div class="trn-buddy" id="trnBuddy"></div>
+                <form id="trnForm" autocomplete="off">
+                  <div class="trn-task"><label for="trnAns" id="trnExpr"></label><input id="trnAns" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="3" enterkeyhint="go" aria-describedby="trnMsg"></div>
+                  <p class="trn-msg" id="trnMsg" aria-live="polite"></p>
+                  <button class="trn-btn" type="submit" id="trnCheck">Проверить</button>
+                </form>
+                <div class="trn-dots" id="trnDots" aria-hidden="true"></div>
+              </div>
+              <div id="trnDone" hidden>
+                <div class="trn-top"><span></span><button type="button" class="trn-link" id="trnClose">Закрыть ✕</button></div>
+                <div class="trn-buddy small" id="trnDoneBuddy"></div>
+                <h3 class="trn-h">Готово!</h3>
+                <p class="trn-sub" id="trnDoneSub"></p>
+                <div class="trn-score"><span>Верно</span><b id="trnScore"></b><small id="trnTime"></small></div>
+                <div id="trnWeakBox"><h4 class="trn-lbl">Над чем поработать</h4><ul class="trn-weak" id="trnWeak"></ul></div>
+                <details class="trn-all" id="trnAll"><summary>Все примеры</summary><ul class="trn-list" id="trnList"></ul></details>
+                <button class="trn-btn" type="button" id="trnCopy">Скопировать отчёт</button>
+                <textarea class="trn-report" id="trnReport" rows="9" readonly hidden aria-label="Текст отчёта"></textarea>
+                <div class="trn-row"><button class="trn-btn ghost" type="button" id="trnAgain">Ещё раз</button><button class="trn-btn ghost" type="button" id="trnNew">Другое задание</button></div>
+              </div>
+              <div class="trn-toast" id="trnToast" role="status" hidden>Отчёт скопирован</div>
+            </div>
+          </div>
+        </div>
+  <div class="page-foot">
+    <p>Тренажёр сделала Валерия Владиславовна, репетитор начальных классов онлайн.</p>
+    <a href="https://t.me/mirrelieteach?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%BD%D0%B0%20%D0%B1%D0%B5%D1%81%D0%BF%D0%BB%D0%B0%D1%82%D0%BD%D1%83%D1%8E%20%D0%B4%D0%B8%D0%B0%D0%B3%D0%BD%D0%BE%D1%81%D1%82%D0%B8%D0%BA%D1%83." target="_blank" rel="noopener">Записаться на бесплатную диагностику</a>
+  </div>
+</main>
+<script>
+/* Тренажёр по математике: сложение и вычитание в пределах 100.
+   Страницы Моро взяты из папки zadan программы на Python, режимы — из папки stil.
+   Код примера: SUM — сложение, MIN — вычитание; две цифры — какие числа: 0 круглое, 1 однозначное, 2 двузначное;
+   буква: y — с переходом через десяток, n — без перехода, k — приведение к круглому.
+   Имена учеников хранятся только в браузере, где открыт сайт (localStorage), и не попадают в код страницы. */
+(function(){
+  "use strict";
+  var MORO = [
+    ["Моро, 2 кл 1 ч, стр 5","SUM11y 4;MIN21n 3;MIN21y 3"],
+    ["Моро, 2 кл 1 ч, стр 9","SUM11y 2;MIN21n 2;MIN21y 4;MIN00 2"],
+    ["Моро, 2 кл 1 ч, стр 14","SUM01 3;MIN21n 3;MIN20 2"],
+    ["Моро, 2 кл 1 ч, стр 26","SUM11y 3;MIN21y 3;MIN00 3"],
+    ["Моро, 2 кл 1 ч, стр 33","SUM11y 4;MIN21y 4"],
+    ["Моро, 2 кл 1 ч, стр 36","MIN00 8"],
+    ["Моро, 2 кл 1 ч, стр 58","SUM21n 3;SUM21k 1;SUM20 4"],
+    ["Моро, 2 кл 1 ч, стр 60","SUM21n 2;SUM21k 2;SUM20 4"],
+    ["Моро, 2 кл 1 ч, стр 66","SUM21k 2;SUM21y 6"],
+    ["Моро, 2 кл 1 ч, стр 67","SUM21y 4;MIN21y 3"],
+    ["Моро, 2 кл 1 ч, стр 68","SUM21y 4;MIN21y 4"],
+    ["Моро, 2 кл 1 ч, стр 72","SUM21k 3;MIN01 2;MIN02 2;MIN20 2"],
+    ["Моро, 2 кл 1 ч, стр 84","SUM21k 2;SUM20 2"],
+    ["Моро, 2 кл 1 ч, стр 86","SUM21n 1;SUM21k 1;SUM20 1;MIN21n 2;MIN20 1"],
+    ["Моро, 2 кл 1 ч, стр 87","MIN21n 2;MIN20 4"],
+    ["Моро, 2 кл 1 ч, стр 90","SUM21y 2;SUM20 1;MIN21y 2;MIN20 1"],
+    ["Моро, 2 кл 1 ч, стр 91","SUM21k 1;SUM20 1;MIN01 1;MIN20 1"],
+    ["Моро, 2 кл 1 ч, стр 92","SUM21y 3;MIN21y 6;MIN02 3"],
+    ["Моро, 2 кл 1 ч, стр 99","SUM22n 2;MIN22n 3"],
+    ["Моро, 2 кл 1 ч, стр 100","SUM22n 2;MIN22n 2"],
+    ["Моро, 2 кл 1 ч, стр 101","SUM21y 1;SUM22n 1;MIN21n 1;MIN22n 1"],
+    ["Моро, 2 кл 1 ч, стр 102","SUM22y 4;MIN22n 1"],
+    ["Моро, 2 кл 1 ч, стр 103","SUM22k 2;SUM22y 1;MIN22n 2"],
+    ["Моро, 2 кл 1 ч, стр 104","SUM22n 2;MIN22n 3"],
+    ["Моро, 2 кл 1 ч, стр 106","SUM22n 1;SUM22k 3;MIN22n 1"],
+    ["Моро, 2 кл 1 ч, стр 109","SUM21k 1;SUM20 2;MIN01 1;MIN21n 1;MIN02 1"],
+    ["Моро, 2 кл 2 ч, стр 5","SUM22k 2;SUM22y 2;MIN02 1;MIN22y 3"],
+    ["Моро, 2 кл 2 ч, стр 6","SUM22k 1;SUM22y 1;MIN02 2;MIN22n 1;MIN22y 3"]
+  ];
+  /* Режимы как в stil/*.txt: tries — попытки, num — номер примера, tryNum — номер попытки, okCnt/badCnt — счёт верных и ошибок,
+     total — «из N», showAns — показать правильный ответ, praise — «Верно!», again — «Попробуй ещё раз», who — имя ученика */
+  var MODES = [
+    {id:"znak",  name:"Знакомство",  hint:"3 попытки и подсказки",   tries:3, num:1, tryNum:1, okCnt:1, badCnt:1, total:1, showAns:1, praise:1, again:1, who:1},
+    {id:"tren",  name:"Тренажёр",    hint:"1 попытка, счёт ответов", tries:1, num:1, tryNum:0, okCnt:1, badCnt:1, total:1, showAns:1, praise:0, again:0, who:1},
+    {id:"kontr", name:"Контрольная", hint:"без подсказок",           tries:1, num:1, tryNum:0, okCnt:0, badCnt:0, total:1, showAns:0, praise:0, again:0, who:1},
+    {id:"doska", name:"Доска",       hint:"только примеры",          tries:1, num:0, tryNum:0, okCnt:0, badCnt:0, total:1, showAns:0, praise:0, again:0, who:0}
+  ];
+  var CODES = ["SUM11y","SUM01","SUM20","SUM21n","SUM21k","SUM21y","SUM22n","SUM22k","SUM22y","MIN00","MIN01","MIN02","MIN20","MIN21n","MIN21y","MIN22n","MIN22y"];
+  var KIND = {"0":"круглое", "1":"однозначное", "2":"двузначное"};
+  var SUF = {y:"с переходом через десяток", n:"без перехода через десяток", k:"приведение к круглому"};
+  var DOT = {y:"#EF6B4F", n:"#33BFAA", k:"#F5B52E", x:"#6F8BD9"};
+
+  function info(code){
+    var sum = code.slice(0,3) === "SUM", s = code.charAt(5) || "x";
+    return {sum:sum, s:s, main:KIND[code.charAt(3)] + (sum ? " + " : " − ") + KIND[code.charAt(4)], suf:SUF[s] || "", color:DOT[s]};
+  }
+  function fullName(code){ var p = info(code); return (p.sum ? "сложение: " : "вычитание: ") + p.main + (p.suf ? ", " + p.suf : ""); }
+
+  /* генератор примеров по коду */
+  function rnd(a,b){ return a + Math.floor(Math.random()*(b-a+1)); }
+  function num(kind){
+    if (kind === "0") return 10*rnd(1,9);
+    if (kind === "1") return rnd(1,9);
+    var n; do { n = rnd(11,99); } while (n % 10 === 0); return n;
+  }
+  function make(code){
+    var sum = code.slice(0,3) === "SUM", s = code.charAt(5);
+    for (var i = 0; i < 3000; i++){
+      var a = num(code.charAt(3)), b = num(code.charAt(4)), ua = a % 10, ub = b % 10;
+      if (sum){
+        var u = ua + ub, r = a + b;
+        if (r > 100) continue;
+        if (s === "y" && u <= 10) continue;
+        if (s === "n" && u >= 10) continue;
+        if (s === "k" && u !== 10) continue;
+        return {a:a, b:b, op:"+", r:r, code:code};
+      }
+      if (a <= b) continue;
+      if (s === "y" && ua >= ub) continue;
+      if (s === "n" && ua <= ub) continue;
+      return {a:a, b:b, op:"−", r:a-b, code:code};
+    }
+    return {a:2, b:2, op:"+", r:4, code:code};
+  }
+  function parse(s){ return s.split(";").map(function(x){ var p = x.split(" "); return [p[0], +p[1]]; }); }
+  function build(sp){
+    var out = [], seen = {};
+    sp.forEach(function(p){
+      for (var j = 0; j < p[1]; j++){
+        var t, k = 0;
+        do { t = make(p[0]); k++; } while (seen[t.a + t.op + t.b] && k < 60);
+        seen[t.a + t.op + t.b] = 1; out.push(t);
+      }
+    });
+    for (var i = out.length - 1; i > 0; i--){ var j2 = rnd(0,i), x = out[i]; out[i] = out[j2]; out[j2] = x; }
+    return out;
+  }
+  function plural(n,a,b,c){ var m = n % 10, h = n % 100; return n + " " + (m === 1 && h !== 11 ? a : (m >= 2 && m <= 4 && (h < 12 || h > 14)) ? b : c); }
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+  function fmt(ms){ var s = Math.max(1, Math.round(ms/1000)), m = Math.floor(s/60), out = []; if (m) out.push(m + " мин"); if (s % 60 || !m) out.push(s % 60 + " с"); return out.join(" "); }
+  function dateStr(d){ return d.toLocaleDateString("ru-RU", {day:"numeric", month:"long", year:"numeric"}).replace(/\s*г\.?$/, ""); }
+  function pageShort(p){ var m = p.match(/(\d) кл (\d) ч, стр (\d+)/); return m[1] + " класс, " + m[2] + " часть, стр. " + m[3]; }
+  function pageLabel(p){ return "Моро, " + pageShort(p); }
+
+  /* фигурки с глазками (свои, нарисованы кодом) */
+  var INK = "#17151B";
+  var SHAPES = [
+    {c:"#EF6B4F", bl:"#CCD4F4", f:[60,60], b:'<circle cx="60" cy="60" r="44"/>'},
+    {c:"#6F8BD9", bl:"#F9CADD", f:[60,66], b:'<path d="M60 18 104 50 87 100 33 100 16 50Z" stroke-width="14" stroke-linejoin="round"/>'},
+    {c:"#F5B52E", bl:"#CDEFE9", f:[60,62], b:'<rect x="16" y="18" width="88" height="88" rx="26"/>'},
+    {c:"#33BFAA", bl:"#FCE3AC", f:[60,76], b:'<path d="M60 22 103 98 17 98Z" stroke-width="16" stroke-linejoin="round"/>'},
+    {c:"#F29BBF", bl:"#CDEFE9", f:[60,61], b:'<circle cx="40" cy="41" r="25"/><circle cx="80" cy="41" r="25"/><circle cx="40" cy="81" r="25"/><circle cx="80" cy="81" r="25"/><circle cx="60" cy="61" r="30"/>'},
+    {c:"#8FA4E2", bl:"#FCD9CD", f:[60,78], b:'<circle cx="38" cy="72" r="26"/><circle cx="64" cy="54" r="32"/><circle cx="88" cy="74" r="22"/><rect x="20" y="70" width="84" height="32" rx="16"/>'}
+  ];
+  var BLOBS = ["M62 -14C100 -16 134 14 134 52C134 92 110 132 66 134C24 136 -14 108 -14 66C-14 22 22 -12 62 -14Z",
+               "M70 -12C112 -6 136 30 130 70C124 112 86 138 46 130C8 122 -16 92 -12 52C-8 14 30 -18 70 -12Z"];
+  var SPARK = '<path d="M104 2Q106 12 116 14Q106 16 104 26Q102 16 92 14Q102 12 104 2Z" fill="#F5B52E"/>';
+  function eye(x,y){ return '<ellipse cx="'+x+'" cy="'+y+'" rx="7.5" ry="8.5" fill="'+INK+'"/><circle cx="'+(x+2.5)+'" cy="'+(y-3)+'" r="2.5" fill="#fff"/>'; }
+  function line(d){ return '<path d="'+d+'" fill="none" stroke="'+INK+'" stroke-width="3.2" stroke-linecap="round"/>'; }
+  function arc(x,y){ return '<path d="M'+(x-7)+' '+(y+3)+'Q'+x+' '+(y-8)+' '+(x+7)+' '+(y+3)+'" fill="none" stroke="'+INK+'" stroke-width="4" stroke-linecap="round"/>'; }
+  function starEye(x,y){
+    var p = [];
+    for (var i = 0; i < 10; i++){ var r = i % 2 ? 3.8 : 9, a = Math.PI/5*i - Math.PI/2; p.push((x + r*Math.cos(a)).toFixed(1) + " " + (y + r*Math.sin(a)).toFixed(1)); }
+    return '<path d="M'+p.join("L")+'Z" fill="'+INK+'" stroke="'+INK+'" stroke-width="1.5" stroke-linejoin="round"/>';
+  }
+  function face(x,y,mood){
+    var open = '<path d="M'+(x-9)+' '+(y+6)+'Q'+x+' '+(y+21)+' '+(x+9)+' '+(y+6)+'Z" fill="'+INK+'"/>';
+    if (mood === "happy") return arc(x-15,y-3) + arc(x+15,y-3) + open;
+    if (mood === "star")  return starEye(x-15,y-4) + starEye(x+15,y-4) + open;
+    if (mood === "sad")   return eye(x-15,y-2) + eye(x+15,y-2) + line("M"+(x-23)+" "+(y-14)+"L"+(x-10)+" "+(y-18)) + line("M"+(x+10)+" "+(y-18)+"L"+(x+23)+" "+(y-14)) + line("M"+(x-7)+" "+(y+15)+"Q"+x+" "+(y+8)+" "+(x+7)+" "+(y+15));
+    return eye(x-15,y-4) + eye(x+15,y-4) + line("M"+(x-6)+" "+(y+8)+"Q"+x+" "+(y+14)+" "+(x+6)+" "+(y+8));
+  }
+  function buddy(k,mood,blob){
+    var s = SHAPES[k % SHAPES.length];
+    return '<svg viewBox="'+(blob ? "-18 -18 156 156" : "6 6 108 108")+'" aria-hidden="true" focusable="false">' +
+      (blob ? '<path d="'+BLOBS[k % 2]+'" fill="'+s.bl+'"/>' : "") +
+      '<g fill="'+s.c+'" stroke="'+s.c+'">'+s.b+'</g>' + face(s.f[0], s.f[1], mood) +
+      (blob && (mood === "happy" || mood === "star") ? SPARK : "") + '</svg>';
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+  var setup = $("trnSetup"), stage = $("trnStage"), card = $("practice"), setupBox = $("trnSetupBox");
+  if (!setup || !stage) return;
+  var nameIn = $("trnName"), namesEl = $("trnNames"), whoBox = $("trnWhoBox"), srcEl = $("trnSrc"), moroBox = $("trnMoro"),
+      pageSel = $("trnPage"), setEl = $("trnSet"), customBox = $("trnCustom"), totalEl = $("trnTotal"), modesEl = $("trnModes"), startBtn = $("trnStart"),
+      playBox = $("trnPlay"), doneBox = $("trnDone"), form = $("trnForm"), ans = $("trnAns"), exprEl = $("trnExpr"), msgEl = $("trnMsg"),
+      checkBtn = $("trnCheck"), buddyEl = $("trnBuddy"), metaEl = $("trnMeta"), okEl = $("trnOk"), badEl = $("trnBad"),
+      dotsEl = $("trnDots"), toast = $("trnToast"), fullBtn = $("trnFull");
+
+  /* настройки: последняя страница, режим, свой набор, список имён — только в этом браузере */
+  var KEY = "trainer.v1", st = {mode:"znak", src:"moro", page:"Моро, 2 кл 2 ч, стр 5", custom:{}, names:[]};
+  try {
+    var sv = JSON.parse(localStorage.getItem(KEY) || "null");
+    if (sv && typeof sv === "object") Object.keys(st).forEach(function(key){ if (key in sv) st[key] = sv[key]; });
+  } catch(e){}
+  if (!MORO.some(function(p){ return p[0] === st.page; })) st.page = MORO[0][0];
+  if (!MODES.some(function(m){ return m.id === st.mode; })) st.mode = "znak";
+  if (st.src !== "custom") st.src = "moro";
+  if (!Array.isArray(st.names)) st.names = [];
+  if (!st.custom || typeof st.custom !== "object") st.custom = {};
+  function save(){ try { localStorage.setItem(KEY, JSON.stringify(st)); } catch(e){} }
+  function mode(){ return MODES.filter(function(m){ return m.id === st.mode; })[0]; }
+  function spec(){
+    if (st.src === "moro") return parse(MORO.filter(function(p){ return p[0] === st.page; })[0][1]);
+    return CODES.filter(function(c){ return st.custom[c] > 0; }).map(function(c){ return [c, st.custom[c]]; });
+  }
+  function count(sp){ return sp.reduce(function(s,p){ return s + p[1]; }, 0); }
+  var SAMPLE = {}; CODES.forEach(function(c){ var t = make(c); SAMPLE[c] = t.a + " " + t.op + " " + t.b; });
+
+  pageSel.innerHTML = MORO.map(function(p){ return '<option value="'+esc(p[0])+'">'+pageShort(p[0])+'</option>'; }).join("");
+  $("trnChars").innerHTML = [[2,0,44,51],[0,37,10,46],[5,26,63,53],[1,78,37,56],[3,128,5,46],[4,129,53,49]].map(function(c){
+    return '<span style="left:'+c[1]+'px;top:'+c[2]+'px;width:'+c[3]+'px;height:'+c[3]+'px">'+buddy(c[0], "idle", false)+'</span>';
+  }).join("");
+
+  function renderSetup(){
+    pageSel.value = st.page;
+    [].forEach.call(srcEl.children, function(b){ b.setAttribute("aria-pressed", String(b.getAttribute("data-src") === st.src)); });
+    moroBox.hidden = st.src !== "moro"; customBox.hidden = st.src !== "custom";
+    var sp = spec(), n = count(sp);
+    if (st.src === "moro"){
+      setEl.innerHTML = sp.map(function(p){
+        var i = info(p[0]);
+        return '<li><span class="trn-dot" style="background:'+i.color+'"></span><span>'+i.main+(i.suf ? '<small>'+i.suf+'</small>' : '')+'</span><span class="trn-n">'+p[1]+'</span></li>';
+      }).join("");
+    } else {
+      var h = "";
+      [["SUM","Сложение"],["MIN","Вычитание"]].forEach(function(g){
+        h += '<div class="trn-grp">'+g[1]+'</div>';
+        CODES.forEach(function(c){
+          if (c.indexOf(g[0]) !== 0) return;
+          var i = info(c), q = st.custom[c] || 0;
+          h += '<div class="trn-brow"><span class="trn-dot" style="background:'+i.color+'"></span><span class="trn-bt">'+i.main+'<small>'+(i.suf ? i.suf+' · ' : '')+SAMPLE[c]+'</small></span>' +
+               '<span class="trn-step"><button type="button" data-code="'+c+'" data-d="-1" aria-label="Убрать пример"'+(q ? '' : ' disabled')+'>−</button><b>'+q+'</b>' +
+               '<button type="button" data-code="'+c+'" data-d="1" aria-label="Добавить пример">+</button></span></div>';
+        });
+      });
+      customBox.innerHTML = h;
+    }
+    totalEl.textContent = n ? plural(n, "пример", "примера", "примеров") : "Добавьте примеры кнопкой +";
+    startBtn.disabled = !n;
+    modesEl.innerHTML = MODES.map(function(m){
+      return '<button type="button" class="trn-mode" role="radio" aria-checked="'+(m.id === st.mode)+'" data-mode="'+m.id+'"><b>'+m.name+'</b></button>';
+    }).join("");
+    $("trnModeHint").textContent = mode().hint;
+    whoBox.hidden = !mode().who;
+    namesEl.innerHTML = st.names.map(function(nm,i){
+      return '<span class="trn-name"><button type="button" data-pick="'+i+'">'+esc(nm)+'</button><button type="button" data-del="'+i+'" aria-label="Убрать из списка: '+esc(nm)+'">×</button></span>';
+    }).join("");
+  }
+
+  srcEl.addEventListener("click", function(e){ var b = e.target.closest("[data-src]"); if (!b) return; st.src = b.getAttribute("data-src"); save(); renderSetup(); });
+  pageSel.addEventListener("change", function(){ st.page = pageSel.value; save(); renderSetup(); });
+  customBox.addEventListener("click", function(e){
+    var b = e.target.closest("[data-code]"); if (!b) return;
+    var c = b.getAttribute("data-code"), d = +b.getAttribute("data-d");
+    st.custom[c] = Math.max(0, Math.min(20, (st.custom[c] || 0) + d)); save(); renderSetup();
+    var nb = customBox.querySelector('[data-code="'+c+'"][data-d="'+d+'"]');
+    if (!nb || nb.disabled) nb = customBox.querySelector('[data-code="'+c+'"][data-d="1"]');
+    if (nb) nb.focus();
+  });
+  modesEl.addEventListener("click", function(e){
+    var b = e.target.closest("[data-mode]"); if (!b) return;
+    st.mode = b.getAttribute("data-mode"); save(); renderSetup();
+    var nb = modesEl.querySelector('[data-mode="'+st.mode+'"]'); if (nb) nb.focus();
+  });
+  namesEl.addEventListener("click", function(e){
+    var p = e.target.closest("[data-pick]"), d = e.target.closest("[data-del]");
+    if (p){ nameIn.value = st.names[+p.getAttribute("data-pick")]; nameIn.focus(); }
+    if (d){ st.names.splice(+d.getAttribute("data-del"), 1); save(); renderSetup(); }
+  });
+  setup.addEventListener("submit", function(e){ e.preventDefault(); begin(); });
+
+  /* сам тренажёр */
+  var run = null, timer = 0;
+  function begin(){
+    var sp = spec(); if (!count(sp)) return;
+    var m = mode(), nm = m.who ? nameIn.value.trim().slice(0,40) : "";
+    if (nm){ st.names = [nm].concat(st.names.filter(function(x){ return x !== nm; })).slice(0,24); save(); renderSetup(); }
+    run = {name:nm, mode:m, title:st.src === "moro" ? pageLabel(st.page) : "Свой набор", list:build(sp), i:0, right:0, bad:0, seed:rnd(0,5), t0:Date.now(), date:new Date()};
+    openOv(); playBox.hidden = false; doneBox.hidden = true; show();
+  }
+  function cur(){ return run.list[run.i]; }
+  function setMsg(h,c){ msgEl.innerHTML = h || ""; msgEl.className = "trn-msg" + (c ? " " + c : ""); }
+  function mood(m){ buddyEl.innerHTML = buddy(run.seed + run.i, m, true); }
+  function updTop(){
+    var m = run.mode, N = run.list.length, parts = [];
+    if (m.num) parts.push("Пример " + (run.i + 1) + (m.total ? " из " + N : ""));
+    else if (m.total) parts.push(plural(N, "пример", "примера", "примеров"));
+    if (m.tryNum && m.tries > 1) parts.push("попытка " + run.att + " из " + m.tries);
+    metaEl.textContent = (run.name ? [run.name] : []).concat(parts).join(" · ");
+    okEl.hidden = !m.okCnt; badEl.hidden = !m.badCnt;
+    okEl.textContent = "✓ " + run.right; badEl.textContent = "✗ " + run.bad;
+  }
+  function dots(){
+    var open = run.mode.okCnt;
+    dotsEl.innerHTML = run.list.map(function(t,i){ return '<i class="'+(t.res ? (open ? t.res : "done") : (i === run.i ? "cur" : ""))+'"></i>'; }).join("");
+  }
+  function show(){
+    var t = cur(); run.att = 1; run.state = "check"; t.answers = []; t.t = Date.now();
+    exprEl.textContent = t.a + " " + t.op + " " + t.b + " =";
+    ans.value = ""; ans.readOnly = false; ans.classList.remove("trn-shown");
+    setMsg(""); checkBtn.textContent = "Проверить";
+    mood("idle"); updTop(); dots();
+    ans.focus({preventScroll:true});
+  }
+  function next(){ clearTimeout(timer); if (!run) return; run.i++; if (run.i < run.list.length) show(); else finish(); }
+  function finish(){
+    clearTimeout(timer);
+    run.ms = Date.now() - run.t0; run.done = run.list.filter(function(t){ return t.res; });
+    playBox.hidden = true; doneBox.hidden = false; renderDone(); toTop();
+    $("trnCopy").focus({preventScroll:true});
+  }
+  function stop(){ if (!run) return closeOv(); clearTimeout(timer); if (run.list.some(function(t){ return t.res; })) finish(); else closeOv(); }
+
+  form.addEventListener("submit", function(e){
+    e.preventDefault(); if (!run || run.state === "wait") return;
+    if (run.state === "next"){ next(); return; }
+    var v = ans.value; if (v === ""){ setMsg("Впиши ответ"); ans.focus(); return; }
+    var t = cur(), m = run.mode, n = +v; t.answers.push(n);
+    if (n === t.r){
+      t.res = run.att === 1 ? "ok" : "retry"; t.ms = Date.now() - t.t; run.right++; updTop(); dots();
+      if (m.praise){ setMsg("Верно!", "ok"); mood("happy"); run.state = "wait"; ans.readOnly = true; timer = setTimeout(next, 900); }
+      else next();
+      return;
+    }
+    run.bad++;
+    if (run.att < m.tries){
+      run.att++; updTop();
+      if (m.again){ setMsg("Попробуй ещё раз", "bad"); mood("sad"); }
+      ans.select(); return;
+    }
+    t.res = "bad"; t.ms = Date.now() - t.t; updTop(); dots();
+    if (m.showAns){
+      ans.value = String(t.r); ans.readOnly = true; ans.classList.add("trn-shown");
+      setMsg("Правильный ответ:<b>" + t.r + "</b>", "ans"); mood("sad");
+      run.state = "next"; checkBtn.textContent = "Дальше";
+    } else next();
+  });
+  ans.addEventListener("input", function(){ var v = ans.value.replace(/\D/g, "").slice(0,3); if (v !== ans.value) ans.value = v; });
+  /* кнопки не забирают фокус у поля ответа: можно печатать дальше, не щёлкая в поле */
+  [checkBtn, fullBtn].forEach(function(b){ b.addEventListener("mousedown", function(e){ e.preventDefault(); }); });
+
+  function weak(){
+    var g = {}, order = [];
+    run.done.forEach(function(t){ if (t.res === "ok") return; if (!g[t.code]){ g[t.code] = 0; order.push(t.code); } g[t.code]++; });
+    return order.map(function(c){ return {code:c, n:g[c]}; }).sort(function(a,b){ return b.n - a.n; });
+  }
+  function renderDone(){
+    var r = run, N = r.done.length, w = weak();
+    $("trnReport").hidden = true;
+    $("trnAll").open = false; $("trnAll").firstElementChild.textContent = "Все примеры · " + N;
+    $("trnDoneBuddy").innerHTML = buddy(r.seed, N && r.right / N >= .8 ? "star" : "happy", true);
+    $("trnDoneSub").textContent = [r.name, dateStr(r.date), r.title, "режим «" + r.mode.name + "»"].filter(Boolean).join(" · ");
+    $("trnScore").textContent = r.right + " из " + N;
+    $("trnTime").textContent = "время: " + fmt(r.ms);
+    $("trnWeakBox").hidden = !w.length;
+    $("trnWeak").innerHTML = w.map(function(x){
+      var i = info(x.code);
+      return '<li class="'+i.s+'"><span>'+(i.sum ? "Сложение: " : "Вычитание: ")+i.main+(i.suf ? ", "+i.suf : "")+'</span><small>'+plural(x.n, "ошибка", "ошибки", "ошибок")+'</small></li>';
+    }).join("");
+    $("trnList").innerHTML = r.done.map(function(t){
+      var wrong = t.answers.filter(function(a){ return a !== t.r; }), c = t.res === "ok" ? "#33BFAA" : t.res === "retry" ? "#F5B52E" : "#EF6B4F";
+      var note = t.res === "ok" ? "верно" : (t.res === "retry" ? "сначала " : "ответ: ") + wrong.join(", ");
+      return '<li class="'+(t.res === "bad" ? "bad" : "")+'"><span class="trn-dot" style="background:'+c+'"></span><span>'+t.a+' '+t.op+' '+t.b+' = '+t.r+'</span><small>'+note+'</small></li>';
+    }).join("");
+  }
+  function report(){
+    var r = run, L = ["Тренажёр: сложение и вычитание", [r.name, dateStr(r.date)].filter(Boolean).join(" · "),
+      r.title + " · режим «" + r.mode.name + "»", "Верно: " + r.right + " из " + r.done.length + " · время: " + fmt(r.ms)];
+    var errs = r.done.filter(function(t){ return t.res !== "ok"; });
+    if (errs.length){
+      L.push("", "Ошибки:");
+      errs.forEach(function(t){ L.push(t.a + " " + t.op + " " + t.b + " = " + t.r + " (ответ: " + t.answers.filter(function(a){ return a !== t.r; }).join(", ") + ")"); });
+      L.push("", "Над чем поработать:");
+      weak().forEach(function(x){ L.push("— " + fullName(x.code) + " (" + plural(x.n, "ошибка", "ошибки", "ошибок") + ")"); });
+    }
+    return L.join("\n");
+  }
+  var toastTimer = 0;
+  function say(t){ toast.textContent = t; toast.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(function(){ toast.hidden = true; }, 2200); }
+  function copy(text){
+    function ok(){ say("Отчёт скопирован"); }
+    /* если браузер не дал скопировать — показываем текст, его можно выделить и скопировать вручную */
+    function manual(){ var box = $("trnReport"); box.value = text; box.hidden = false; box.focus(); box.select(); say("Скопируйте текст из поля"); }
+    function fallback(){
+      var ta = document.createElement("textarea"), done = false; ta.value = text; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0";
+      card.appendChild(ta); ta.select(); try { done = document.execCommand("copy"); } catch(e){} card.removeChild(ta);
+      if (done) ok(); else manual();
+    }
+    if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(ok, fallback); else fallback();
+  }
+
+  function fsEl(){ return document.fullscreenElement || document.webkitFullscreenElement || null; }
+  function fsExit(){ var p = (document.exitFullscreen || document.webkitExitFullscreen || function(){}).call(document); if (p && p.catch) p.catch(function(){}); }
+  /* карточка меняет высоту: возвращаем её верх в поле зрения */
+  function toTop(){
+    if (fsEl()){ card.scrollTop = 0; return; }
+    var y = card.getBoundingClientRect().top;
+    if (y < 0 || y > window.innerHeight * 0.4) window.scrollBy(0, y - 16);
+  }
+  function openOv(){ setupBox.hidden = true; stage.hidden = false; toTop(); }
+  function closeOv(){
+    clearTimeout(timer); run = null;
+    if (fsEl()) fsExit();
+    stage.hidden = true; setupBox.hidden = false; toTop();
+    startBtn.focus({preventScroll:true});
+  }
+  $("trnStop").addEventListener("click", stop);
+  $("trnClose").addEventListener("click", closeOv);
+  $("trnNew").addEventListener("click", closeOv);
+  $("trnAgain").addEventListener("click", begin);
+  $("trnCopy").addEventListener("click", function(){ if (run) copy(report()); });
+  var fsReq = card.requestFullscreen || card.webkitRequestFullscreen;
+  if (fsReq && (document.fullscreenEnabled || document.webkitFullscreenEnabled)){
+    fullBtn.addEventListener("click", function(){
+      if (fsEl()) fsExit();
+      else { var p = fsReq.call(card); if (p && p.catch) p.catch(function(){}); }
+      ans.focus({preventScroll:true});
+    });
+  } else fullBtn.hidden = true;
+  document.addEventListener("keydown", function(e){
+    if (e.key !== "Escape" || stage.hidden || fsEl() || !card.contains(document.activeElement)) return;
+    if (!doneBox.hidden) closeOv(); else stop();
+  });
+
+  renderSetup();
+})();
+</script>
+</body>
+</html>
