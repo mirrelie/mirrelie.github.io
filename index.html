@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Валерия Владиславовна — репетитор</title>
+<meta name="description" content="Репетитор начальных классов онлайн: подготовка к школе, русский язык, математика, литература, окружающий мир. Бесплатная диагностика знаний.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+/* Стиль авито-слайдов: ровная бежевая бумага, красные заголовки Amatic SC, текст Inter,
+   метки заглавными с разрядкой, жёлтый мазок маркера, белые карточки со скотчем, ч/б полароиды,
+   жёлтая штриховка и штрихованные звёзды. Одна узкая колонка на телефоне и на компьютере. */
+:root{
+  color-scheme:light;
+  --paper:#EEE8DF; --paper-2:#E7DFD3; --card:#FFFFFF; --soft:#F3EEE7;
+  --red:#A51E2A; --yellow:#EDC03C; --ink:#232020; --muted:#6F665E; --line:#D9D0C4;
+  --title:'Amatic SC','Arial Narrow',sans-serif;
+  --text:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  /* мазок маркера — тот же зигзаг, что на слайдах */
+  --brush:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 440 90' preserveAspectRatio='none' fill='none' stroke='%23EDC03C' stroke-width='9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.2 6.9 L435.3 16.4 L5.3 22.6 L415.8 28.0 L2.8 40.6 L433.8 38.8 L6.3 43.7 L423.6 49.7 L10.9 55.5 L439.7 61.1 L8.1 70.1 L436.4 71.5 L6.9 79.1'/%3E%3C/svg%3E");
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--text);font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+p{margin:0}
+.page{max-width:460px;margin:0 auto;padding:0 max(20px,env(safe-area-inset-right,0px)) 0 max(20px,env(safe-area-inset-left,0px));overflow-x:clip}
+section{position:relative;padding:44px 0 8px}
+
+/* типографика как на слайдах */
+.label{display:block;font-weight:700;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);line-height:1.4}
+.label.red{color:var(--red)}
+.h{font-family:var(--title);font-weight:700;color:var(--red);font-size:42px;line-height:1;margin:4px 0 0;letter-spacing:.01em}
+.lead{font-weight:700;font-size:16px;line-height:1.35}
+.muted{color:var(--muted)}
+.r{color:var(--red);font-weight:700}
+.mark{background:var(--brush) no-repeat 0 85%/100% 62%;padding:0 5px;margin:0 -5px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.big-mark{font-weight:800;font-size:18px;letter-spacing:.02em}
+
+/* декор */
+.hatch{position:absolute;pointer-events:none;opacity:.85;
+  background-image:repeating-linear-gradient(58deg,var(--yellow) 0 1.3px,transparent 1.3px 8px),repeating-linear-gradient(-32deg,var(--yellow) 0 1.3px,transparent 1.3px 9px)}
+.tape{position:absolute;height:20px;width:84px;z-index:4;pointer-events:none;
+  clip-path:polygon(0 12%,4% 0,9% 10%,50% 4%,92% 0,96% 12%,100% 4%,98% 50%,100% 96%,95% 88%,50% 100%,6% 92%,2% 100%,0 60%,3% 34%)}
+.tape.y{background:var(--yellow);opacity:.92}
+.tape.g{background-color:rgba(165,30,42,.78);background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.5) 0 2px,transparent 2px 5px),repeating-linear-gradient(90deg,rgba(255,255,255,.5) 0 2px,transparent 2px 5px)}
+.tape.top{top:-10px;left:50%;margin-left:-42px}
+.star{position:absolute;pointer-events:none;z-index:3}
+.pol{position:relative;background:#fff;padding:9px 9px 26px;border-radius:3px;box-shadow:0 10px 26px rgba(50,35,20,.16)}
+.pol img{width:100%;object-fit:cover}
+.bw{filter:grayscale(1)}
+
+/* карточки */
+.card{position:relative;background:var(--card);border-radius:10px;padding:22px 20px 20px;box-shadow:0 8px 24px rgba(50,35,20,.10)}
+.benefit{margin-top:14px;background:var(--soft);border-radius:8px;padding:12px 14px}
+.benefit .label{margin-bottom:4px}
+
+/* кнопки */
+.btn{display:flex;width:max-content;max-width:100%;margin-left:auto;margin-right:auto;justify-content:center;align-items:center;gap:8px;text-decoration:none;background:var(--red);color:#fff;font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:13px 26px;border-radius:10px;box-shadow:0 6px 16px rgba(165,30,42,.22)}
+.btn:hover{background:#8F1824}
+.btn:focus-visible,.faq summary:focus-visible,.arr:focus-visible,.carousel:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
+
+/* 1. шапка */
+.hero{padding-top:34px;text-align:center}
+.hero-pic{position:relative;width:236px;margin:22px auto 0}
+.hero-pic .hatch{left:-34px;top:-22px;width:120px;height:110px}
+.hero-pic .pol{padding:10px 10px 30px}
+.portrait{position:relative;aspect-ratio:1/1;background:#F1ECE5;overflow:hidden}
+.portrait img{position:absolute;left:0;right:0;bottom:0;width:100%;height:auto;aspect-ratio:1}
+.portrait .ol{filter:drop-shadow(0 1px 1px rgba(0,0,0,.18))}
+.five{position:absolute;z-index:5;right:-30px;top:2px;font-family:var(--title);font-size:40px;line-height:1;color:var(--red)}
+.hero .name{font-weight:700;font-size:17px;margin-top:26px}
+.hero .label{margin-top:4px}
+.hero h1{font-family:var(--title);font-weight:700;color:var(--red);font-size:50px;line-height:.98;margin:12px 0 0}
+.subjects{font-size:12.5px;color:var(--muted);margin-top:12px;line-height:1.5}
+.diag{margin-top:20px}
+.diag .big-mark{display:inline-block;margin-top:4px}
+.hero .btn{margin-top:22px}
+
+/* 2. обо мне */
+.about-grid{display:grid;grid-template-columns:1fr;gap:26px;margin-top:16px}
+.diploma{position:relative;width:64%;margin:6px auto 0}
+.diploma .hatch{right:-30px;top:-20px;width:110px;height:120px}
+.diploma .pol img{aspect-ratio:800/1127}
+.circle{position:absolute;left:-6%;top:47%;width:62%;height:44%;z-index:3;pointer-events:none;overflow:visible}
+.edu .label{margin-top:2px}
+.edu .lead{margin-top:6px}
+.edu .lead + .lead{margin-top:6px}
+.stars-list{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
+.stars-list li{position:relative;padding-left:26px}
+.stars-list li::before{content:"";position:absolute;left:0;top:2px;width:16px;height:16px;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cg stroke='%23A51E2A' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M10 1.5v17M2.6 5.8l14.8 8.4M2.6 14.2l14.8-8.4'/%3E%3C/g%3E%3C/svg%3E") no-repeat center/contain}
+
+/* фото + карточка поверх (как на слайдах 4 и 5) */
+.photo-card{position:relative;margin-top:26px}
+.photo-card > .ph{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:10px}
+.photo-card > .card{margin:-54px 12px 0;z-index:2}
+.photo-card .card .h{font-size:38px}
+.photo-card .card p.txt{margin-top:8px}
+.mini{position:absolute;right:-6px;top:-22px;width:34%;z-index:3;padding:6px 6px 16px}
+.mini img{aspect-ratio:3/4}
+.mini .tape{width:64px;margin-left:-32px}
+
+/* 4. материалы */
+.sheets{position:relative;height:262px;margin-top:30px}
+.sheet{position:absolute;width:46%;background:#fff;padding:5px;border-radius:3px;box-shadow:0 8px 22px rgba(50,35,20,.16)}
+.sheet img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top}
+.sheet.s1{left:0;top:30px}
+.sheet.s2{left:27%;top:0;z-index:2}
+.sheet.s3{right:0;top:30px}
+.sheet.s1,.sheet.s3{z-index:1}
+.sheet .tape{top:-9px;left:50%;margin-left:-30px;width:60px}
+.sheet.s1 .tape{left:32%}
+.sheet.s3 .tape{left:68%}
+.plus{margin-top:22px;text-align:center;font-weight:800;font-size:13.5px;letter-spacing:.06em;text-transform:uppercase}
+.plus span{color:var(--red);margin-right:4px}
+
+/* 5. как проходят уроки */
+.lessons-head{position:relative}
+.lessons-head .hatch{right:-6px;top:-8px;width:96px;height:78px}
+.lessons{display:flex;flex-direction:column;gap:22px;margin-top:26px}
+.lesson{display:grid;grid-template-columns:30px 1fr;gap:6px;align-items:start;padding:22px 18px 18px}
+.lesson .n{font-family:var(--title);font-size:46px;line-height:.8;color:var(--red);padding-top:2px}
+.lesson .label{margin-bottom:6px}
+.dots-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:3px}
+.dots-list li{position:relative;padding-left:16px}
+.dots-list li::before{content:"";position:absolute;left:2px;top:.62em;width:6px;height:6px;border-radius:50%;background:var(--red)}
+
+/* отзывы */
+.rev-photo{position:relative;margin-top:22px}
+.rev-photo > img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:10px}
+.carousel{position:relative;z-index:2;margin:-58px -20px 0;display:grid;grid-auto-flow:column;grid-auto-columns:84%;column-gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:14px 20px 16px;scroll-padding:0 20px;scrollbar-width:none}
+.carousel::-webkit-scrollbar{display:none}
+@media (min-width:600px){.carousel{grid-auto-columns:100%;margin:-58px 0 0;padding:14px 0 16px;scroll-padding:0}}
+.rev{margin:0;scroll-snap-align:center;display:flex;flex-direction:column;gap:8px;padding:24px 18px 18px;font-size:13.5px}
+.rev .q{font-weight:800;font-size:34px;line-height:.5;height:14px;color:var(--red);font-style:italic}
+.rev .sign{font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#9A8F84}
+.rev-ctl{display:flex;justify-content:center;align-items:center;gap:14px;margin-top:4px}
+.arr{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--red);background:transparent;color:var(--red);display:grid;place-items:center;cursor:pointer;padding:0}
+.arr:disabled{opacity:.3;cursor:default}
+.dots{display:flex;gap:6px}
+.dots span{width:7px;height:7px;border-radius:50%;background:var(--line)}
+.dots span.on{background:var(--red)}
+
+/* стоимость */
+.prices{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:28px}
+.price{padding:24px 14px 18px;text-align:center}
+.price .amt{font-weight:800;font-size:24px;margin-top:8px;letter-spacing:-.01em}
+.price .per{font-size:12px;color:var(--muted);margin-top:2px;line-height:1.35}
+.price .dur{font-size:12px;color:var(--muted);margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+.free{margin-top:20px;text-align:center}
+.prices-btn{margin-top:18px}
+
+/* вопросы */
+.faq{display:flex;flex-direction:column;gap:8px;margin-top:22px}
+.faq details{background:#fff;border-radius:10px;padding:0 16px;box-shadow:0 4px 14px rgba(50,35,20,.07)}
+.faq summary{cursor:pointer;list-style:none;padding:14px 0;font-weight:600;font-size:14px;display:flex;justify-content:space-between;gap:12px;align-items:center}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-weight:400;font-size:22px;line-height:.6;color:var(--red);flex:none;transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{padding:0 0 14px;color:var(--muted);font-size:13.5px}
+
+/* напишите */
+.cta{text-align:center;padding-top:56px}
+.cta-title{position:relative;display:inline-block}
+.cta-title .hatch{left:-38px;top:-6px;width:92px;height:70px}
+.cta .h{position:relative;font-size:64px;margin:0}
+.cta-text{font-weight:800;font-size:17px;line-height:1.5;margin-top:14px}
+.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:22px}
+.chips span{display:inline-flex;align-items:center;gap:7px;background:#fff;border-radius:8px;padding:8px 12px;font-weight:700;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;box-shadow:0 4px 12px rgba(50,35,20,.09)}
+.chips span::before{content:"";width:12px;height:10px;flex:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 11'%3E%3Cpath d='M1.5 5.8 5 9.2 12.5 1.5' fill='none' stroke='%23A51E2A' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center/contain}
+.down{display:block;margin:18px auto 6px}
+.placeholder{display:block;text-align:center;margin-top:10px;font-size:12px;color:var(--muted)}
+footer{text-align:center;font-size:11.5px;color:var(--muted);padding:40px 20px 30px}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <clipPath id="starClip"><path d="M49.2 8.1 L60.2 38.7 L92.1 38.2 L66.8 57.8 L77.6 89.1 L50.3 72.0 L22.5 91.6 L34.5 57.8 L6.7 38.8 L37.3 36.8 Z"/></clipPath>
+    <!-- звезда «от руки»: штриховка в две стороны + неровный контур, цвет задаётся атрибутом color у <use> -->
+    <symbol id="star" viewBox="0 0 100 100">
+      <g clip-path="url(#starClip)" fill="none" stroke="currentColor" stroke-linecap="round">
+        <path stroke-width="3.2" d="M-10 -14.1L110 -61.8M-10 -8.3L110 -56.5M-10 0.1L110 -46.9M-10 8.2L110 -41.1M-10 16.4L110 -33.6M-10 22.3L110 -25.2M-10 29.0L110 -19.6M-10 36.1L110 -11.7M-10 45.8L110 -2.4M-10 53.6L110 4.4M-10 60.6L110 12.5M-10 67.7L110 19.1M-10 76.0L110 29.3M-10 82.4L110 34.6M-10 88.7L110 41.0M-10 97.9L110 51.4M-10 106.0L110 56.6M-10 112.2L110 64.3M-10 118.6L110 69.9M-10 126.5L110 76.5M-10 133.7L110 86.3M-10 141.4L110 91.9M-10 149.7L110 102.7"/>
+        <path stroke-width="2.4" opacity=".85" d="M-10 -56.0L110 39.2M-10 -49.2L110 44.3M-10 -40.4L110 54.9M-10 -30.1L110 62.2M-10 -24.0L110 68.7M-10 -15.3L110 78.4M-10 -5.7L110 87.1M-10 1.0L110 94.4M-10 10.6L110 104.6M-10 20.9L110 115.4M-10 28.0L110 122.3M-10 37.0L110 129.0M-10 46.2L110 141.1M-10 54.6L110 149.6"/>
+      </g>
+      <path d="M49.2 8.1 L60.2 38.7 L92.1 38.2 L66.8 57.8 L77.6 89.1 L50.3 72.0 L22.5 91.6 L34.5 57.8 L6.7 38.8 L37.3 36.8 Z" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linejoin="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<main class="page">
+
+  <!-- 1. Шапка (как обложка) -->
+  <section class="hero">
+    <div class="hero-pic">
+      <div class="hatch" aria-hidden="true"></div>
+      <div class="pol">
+        <div class="tape g top"></div>
+        <div class="portrait">
+          <img src="img/portrait.webp" alt="Валерия Владиславовна" width="900" height="900">
+          <img class="ol" src="img/outline.webp" alt="" width="900" height="900">
+        </div>
+      </div>
+      <svg class="star" style="left:-22px;top:46px;width:44px;height:44px" aria-hidden="true"><use href="#star" color="#A51E2A"/></svg>
+      <svg class="star" style="left:-8px;top:96px;width:26px;height:26px" aria-hidden="true"><use href="#star" color="#A51E2A"/></svg>
+      <svg class="star" style="right:-24px;bottom:-14px;width:52px;height:52px" aria-hidden="true"><use href="#star" color="#E2B42E"/></svg>
+      <div class="five" aria-hidden="true">5+</div>
+    </div>
+    <p class="name">Валерия Владиславовна</p>
+    <span class="label">Занятия онлайн · 1–4 класс</span>
+    <h1>Репетитор<br>начальных классов</h1>
+    <p class="subjects">подготовка к&nbsp;школе · русский язык · математика ·<br>литература · окружающий мир</p>
+    <div class="diag">
+      <span class="label">Диагностика знаний</span>
+      <span class="big-mark"><span class="mark">БЕСПЛАТНО</span></span>
+    </div>
+    <a class="btn" href="#contact">Записаться на диагностику</a>
+  </section>
+
+  <!-- 2. Образование и опыт -->
+  <section id="about">
+    <h2 class="h">Обо мне</h2>
+    <div class="about-grid">
+      <div class="diploma">
+        <div class="hatch" aria-hidden="true"></div>
+        <div class="pol">
+          <div class="tape g top"></div>
+          <img src="img/diploma.jpg" alt="Валерия Владиславовна с красным дипломом" width="800" height="1127" loading="lazy">
+          <svg class="circle" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M58 6 C 28 2, 4 22, 5 52 C 6 80, 34 97, 62 94 C 88 91, 98 66, 95 40 C 92 16, 70 3, 44 8" fill="none" stroke="#A51E2A" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg>
+        </div>
+      </div>
+      <div class="edu">
+        <span class="label">Окончила специальность</span>
+        <p class="lead">«Преподавание в&nbsp;начальных классах»</p>
+        <p class="lead"><span class="mark">с&nbsp;<span class="r">красным</span> дипломом</span></p>
+        <ul class="stars-list">
+          <li>развиваю <span class="r">усидчивость и&nbsp;дисциплину</span></li>
+          <li><b>интерактивные занятия</b>&nbsp;— ребёнку интересно, а&nbsp;не&nbsp;скучно</li>
+          <li>после каждого урока пишу родителям <b>отчёт о&nbsp;занятии</b> и&nbsp;отвечаю на&nbsp;все вопросы</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="photo-card">
+      <img class="ph bw" src="img/lecture.jpg" alt="Лекция для преподавателей университета" width="1280" height="960" loading="lazy" style="object-position:30% 45%">
+      <div class="card">
+        <div class="tape y top"></div>
+        <span class="label">Опыт</span>
+        <h3 class="h">Учу учителей</h3>
+        <p class="txt">Провела курс лекций для&nbsp;преподавателей университета&nbsp;— как использовать в&nbsp;обучении интерактивные инструменты на&nbsp;Python.</p>
+        <div class="benefit">
+          <span class="label red">Что это даёт вашему ребёнку</span>
+          <p>На&nbsp;занятиях&nbsp;— <b>те&nbsp;же современные интерактивные инструменты</b>, которым я&nbsp;обучаю педагогов.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Моя разработка -->
+  <section id="trainer">
+    <div class="photo-card">
+      <img class="ph bw" src="img/trainer.jpg" alt="Урок в школе: дети работают с тренажёром" width="1280" height="960" loading="lazy">
+      <div class="pol mini">
+        <div class="tape y top"></div>
+        <img class="bw" src="img/trainer2.jpg" alt="Ученица решает пример в тренажёре" width="700" height="933" loading="lazy">
+      </div>
+      <div class="card">
+        <div class="tape g top"></div>
+        <span class="label">Моя разработка</span>
+        <h2 class="h">Счёт&nbsp;— как игра</h2>
+        <p class="txt">Написала на&nbsp;Python тренажёр по&nbsp;математике и&nbsp;неоднократно проверила его на&nbsp;уроках в&nbsp;школе с&nbsp;учениками разных возрастов.</p>
+        <div class="benefit">
+          <span class="label red">Что это даёт вашему ребёнку</span>
+          <p>Счёт тренируется <span class="r">как игра</span>, а&nbsp;не&nbsp;как скучная зубрёжка.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Материалы занятий -->
+  <section id="materials">
+    <h2 class="h">Материалы занятий</h2>
+    <svg class="star" style="right:4px;top:40px;width:36px;height:36px" aria-hidden="true"><use href="#star" color="#A51E2A"/></svg>
+    <div class="sheets">
+      <div class="sheet s1"><div class="tape y"></div><img src="img/ws3.jpg" alt="Рабочий лист «Внетабличное умножение и деление»" width="700" height="875" loading="lazy"></div>
+      <div class="sheet s2"><div class="tape g"></div><img src="img/ws2.jpg" alt="Рабочий лист «Входной контроль по математике»" width="700" height="1050" loading="lazy"></div>
+      <div class="sheet s3"><div class="tape y"></div><img src="img/ws1.jpg" alt="Рабочий лист «Смысловое чтение»" width="700" height="989" loading="lazy"></div>
+      <svg class="star" style="left:-12px;bottom:-14px;width:44px;height:44px" aria-hidden="true"><use href="#star" color="#E2B42E"/></svg>
+    </div>
+    <p class="plus"><span>+</span>интерактивные игры и&nbsp;квесты</p>
+  </section>
+
+  <!-- 5. Как проходят уроки -->
+  <section id="lessons">
+    <div class="lessons-head">
+      <div class="hatch" aria-hidden="true"></div>
+      <svg class="star" style="right:22px;top:10px;width:40px;height:40px" aria-hidden="true"><use href="#star" color="#A51E2A"/></svg>
+      <span class="label">Занятия онлайн</span>
+      <h2 class="h">Как проходят уроки</h2>
+    </div>
+    <div class="lessons">
+      <div class="card lesson">
+        <div class="tape g top"></div>
+        <div class="n">1</div>
+        <div>
+          <span class="label">Диагностика знаний</span>
+          <span class="big-mark"><span class="mark">БЕСПЛАТНО</span></span>
+        </div>
+      </div>
+      <div class="card lesson">
+        <div class="tape y top"></div>
+        <div class="n">2</div>
+        <div>
+          <span class="label">Предметы</span>
+          <ul class="dots-list">
+            <li>подготовка к&nbsp;школе</li>
+            <li>русский язык</li>
+            <li>математика</li>
+            <li>литература</li>
+            <li>окружающий мир</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card lesson">
+        <div class="tape y top"></div>
+        <div class="n">3</div>
+        <div>
+          <span class="label">Подход</span>
+          <ul class="dots-list">
+            <li>объясняю просто и&nbsp;на&nbsp;примерах</li>
+            <li>без давления и&nbsp;крика</li>
+            <li>в&nbsp;темпе ребёнка</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card lesson">
+        <div class="tape g top"></div>
+        <div class="n">4</div>
+        <div>
+          <span class="label">Цель занятий</span>
+          <ul class="dots-list">
+            <li>закрыть пробелы по&nbsp;программе</li>
+            <li>читать бегло и&nbsp;понимать прочитанное</li>
+            <li>решать задачи <span class="r">без подсказок</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Отзывы -->
+  <section id="reviews">
+    <h2 class="h">Отзывы родителей</h2>
+    <div class="rev-photo">
+      <img class="bw" src="img/class.jpg" alt="Урок в классе" width="1210" height="906" loading="lazy">
+    </div>
+    <div class="carousel" id="revTrack" tabindex="0" aria-label="Отзывы, листайте вправо">
+      <figure class="card rev">
+        <div class="tape y top"></div>
+        <div class="q" aria-hidden="true">“</div>
+        <p>Попросила репетитора помочь с&nbsp;темами по&nbsp;математике, по&nbsp;которым у&nbsp;ребёнка были плохие оценки, и&nbsp;заодно проверить общий уровень знаний. Занятие прошло спокойно, всё объяснили понятно и&nbsp;доступно. <span class="r">Сын разобрался в&nbsp;сложных темах.</span> Индивидуальные занятия оказались намного эффективнее, чем уроки в&nbsp;школе. Спасибо!</p>
+        <figcaption class="sign">— отзыв родителя</figcaption>
+      </figure>
+      <figure class="card rev">
+        <div class="tape y top"></div>
+        <div class="q" aria-hidden="true">“</div>
+        <p>Очень хороший репетитор! <span class="r">Быстро нашла общий язык с&nbsp;ребёнком</span> и&nbsp;смогла заинтересовать занятиями. Всё объясняет понятно, спокойно и&nbsp;терпеливо. Ответила на&nbsp;все мои вопросы, всегда вежлива и&nbsp;доброжелательна. Остались только положительные впечатления, рекомендую!</p>
+        <figcaption class="sign">— отзыв родителя</figcaption>
+      </figure>
+    </div>
+    <div class="rev-ctl">
+      <button class="arr" id="revPrev" type="button" aria-label="Предыдущий отзыв"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <div class="dots" id="revDots" aria-hidden="true"></div>
+      <button class="arr" id="revNext" type="button" aria-label="Следующий отзыв"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+    </div>
+  </section>
+
+  <!-- 6. Стоимость -->
+  <section id="prices">
+    <h2 class="h">Стоимость</h2>
+    <div class="prices">
+      <div class="card price">
+        <div class="tape g top"></div>
+        <span class="label">Индивидуально</span>
+        <div class="amt">1800&nbsp;₽</div>
+        <div class="per">за занятие</div>
+        <div class="dur">60&nbsp;минут<br>один ребёнок</div>
+      </div>
+      <div class="card price">
+        <div class="tape y top"></div>
+        <span class="label">Вдвоём</span>
+        <div class="amt">1300&nbsp;₽</div>
+        <div class="per">с&nbsp;каждого ребёнка</div>
+        <div class="dur">60&nbsp;минут<br>два ребёнка</div>
+      </div>
+    </div>
+    <p class="free"><span class="label">Первая встреча&nbsp;— диагностика</span><span class="big-mark"><span class="mark">БЕСПЛАТНО</span></span></p>
+    <a class="btn prices-btn" href="#contact">Записаться</a>
+  </section>
+
+  <!-- 7. Вопросы и ответы -->
+  <section id="faq">
+    <h2 class="h">Вопросы и ответы</h2>
+    <div class="faq">
+      <details><summary>Сколько длится занятие?</summary><p>60 минут.</p></details>
+      <details><summary>Как проходит урок онлайн?</summary><p>По видеосвязи. Задания ребёнок видит на экране и выполняет их вместе со мной: упражнения, игры и квесты. Нужен компьютер, ноутбук или планшет с камерой и интернет.</p></details>
+      <details><summary>Что такое бесплатная диагностика?</summary><p>Это первая встреча. Я смотрю, как ребёнок справляется с программой, где у него пробелы, и рассказываю вам, над чем стоит поработать. Ни к чему не обязывает.</p></details>
+      <details><summary>Как я узнаю, что ребёнок продвигается?</summary><p>После каждого урока пишу вам отчёт: что прошли, что получилось и над чем работаем дальше.</p></details>
+      <details><summary>Можно заниматься вдвоём?</summary><p>Да, например с братом, сестрой или другом. Парное занятие стоит 1300&nbsp;₽ с каждого ребёнка.</p></details>
+      <details><summary>С какого возраста вы занимаетесь?</summary><p>Готовлю дошкольников к школе и занимаюсь с учениками 1–4 классов.</p></details>
+      <details><summary>Мы в другом часовом поясе. Это проблема?</summary><p>Нет, занятия онлайн. Подберём удобное вам время.</p></details>
+    </div>
+  </section>
+
+  <!-- Напишите! (как последний слайд) -->
+  <section class="cta" id="contact">
+    <div class="cta-title">
+      <div class="hatch" aria-hidden="true"></div>
+      <h2 class="h">Напишите!</h2>
+      <svg class="star" style="right:-30px;top:-8px;width:38px;height:38px" aria-hidden="true"><use href="#star" color="#A51E2A"/></svg>
+    </div>
+    <p class="cta-text">Разовьём<br><span class="mark">усидчивость и&nbsp;дисциплину</span><br>вместе</p>
+    <div class="chips"><span>диагностика бесплатно</span><span>занятия онлайн</span><span>отчёт после каждого урока</span></div>
+    <svg class="down" width="34" height="58" viewBox="0 0 34 58" aria-hidden="true"><path d="M14 3 C 22 18, 22 36, 17 52 M8 44 L17 53 L25 43" fill="none" stroke="#A51E2A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <a class="btn" href="#contact">Написать мне <span aria-hidden="true">→</span></a>
+    <span class="placeholder" id="contactNote">здесь будет ссылка на ваш мессенджер</span>
+  </section>
+
+  <footer>Валерия Владиславовна · репетитор начальных классов онлайн</footer>
+</main>
+
+<script>
+/* Ссылка на мессенджер: вставьте сюда, например "https://t.me/ваш_ник" */
+var CONTACT_URL = "https://t.me/mirrelieteach?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%BD%D0%B0%20%D0%B1%D0%B5%D1%81%D0%BF%D0%BB%D0%B0%D1%82%D0%BD%D1%83%D1%8E%20%D0%B4%D0%B8%D0%B0%D0%B3%D0%BD%D0%BE%D1%81%D1%82%D0%B8%D0%BA%D1%83."; // Телеграм @mirrelieteach с готовым текстом записи
+if (CONTACT_URL) {
+  document.querySelectorAll('a[href="#contact"]').forEach(function(a){ a.href = CONTACT_URL; a.target = "_blank"; a.rel = "noopener"; });
+  var n = document.getElementById("contactNote"); if (n) n.hidden = true;
+}
+(function(){
+  var t=document.getElementById("revTrack"); if(!t) return;
+  var items=t.children, dots=document.getElementById("revDots");
+  for(var i=0;i<items.length;i++){ dots.appendChild(document.createElement("span")); }
+  function cur(){ var best=0,bd=1e9,c=t.scrollLeft+t.clientWidth/2; for(var i=0;i<items.length;i++){var m=items[i].offsetLeft-t.offsetLeft+items[i].offsetWidth/2,d=Math.abs(m-c); if(d<bd){bd=d;best=i;}} return best; }
+  function upd(){ var c=cur(); [].forEach.call(dots.children,function(d,i){ d.className=i===c?"on":""; });
+    document.getElementById("revPrev").disabled=c<=0; document.getElementById("revNext").disabled=c>=items.length-1; }
+  function go(n){ var c=Math.max(0,Math.min(items.length-1,cur()+n)); t.scrollTo({left:items[c].offsetLeft-t.offsetLeft-(t.clientWidth-items[c].offsetWidth)/2,behavior:"smooth"}); }
+  document.getElementById("revPrev").onclick=function(){go(-1)};
+  document.getElementById("revNext").onclick=function(){go(1)};
+  t.addEventListener("scroll",function(){ requestAnimationFrame(upd); });
+  upd();
+})();
+</script>
+</body>
+</html>
